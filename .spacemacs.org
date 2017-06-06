@@ -62,8 +62,7 @@
          version-control
          git
          org
-         ;; better-defaults
-         ;; markdown
+         asciidoc
          ;; (shell :variables
          ;;        shell-default-height 30
          ;;        shell-default-position 'bottom)
@@ -554,6 +553,7 @@
             eclim-executable "~/.local/eclipse/eclim"
             eclimd-default-workspace "~/Programming/Java")
       (set-mouse-color "white")
+      (add-to-list 'auto-mode-alist '("\\.asciidoc?\\'" . adoc-mode))
       (add-hook 'c-mode-common-hook 'vtec234/c-coding-hook)
       (require 'ob-ditaa)
       (org-babel-do-load-languages
