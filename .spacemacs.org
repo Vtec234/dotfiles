@@ -524,19 +524,34 @@
    
 ** Language hook
    #+BEGIN_SRC emacs-lisp
-     (defun vtec234/c-coding-hook ()
+     (defun vtec234/c-common-hook ()
        (c-add-style "sft" vtec234/sft-c-style)
        (c-add-style "google" vtec234/google-c-style)
 
        (c-toggle-auto-newline nil) ; no automatic
        (c-toggle-auto-state nil)   ; newlines
-       ;; smart tabs
+
        (smart-tabs-advice c-indent-line c-basic-offset)
        (smart-tabs-advice c-indent-region c-basic-offset)
        (smart-tabs-insinuate 'c 'c++)
+
        (vtec234/init-rtags))
+
+     (defun vtec234/init-c ()
+       (add-hook 'c-mode-common-hook 'vtec234/c-common-hook))
    #+END_SRC
    
+* Java Programming
+  #+BEGIN_SRC emacs-lisp
+    (defun vtec234/java-hook ()
+      (setq eclim-eclipse-dirs "~/.local/eclipse"
+            eclim-executable "~/.local/eclipse/eclim"
+            eclimd-default-workspace "~/Programming/Java"))
+
+    (defun vtec234/init-java ()
+      (add-hook 'java-mode-hook 'vtec234/java-hook))
+  #+END_SRC
+
 * User configuration
   Configuration function for user code.
   This function is called at the very end of Spacemacs initialization after
@@ -549,14 +564,20 @@
       (setq powerline-default-separator 'slant)
       (evil-define-key 'visual evil-surround-mode-map "s" 'evil-substitute)
       (evil-define-key 'visual evil-surround-mode-map "S" 'evil-surround-region)
-      (setq eclim-eclipse-dirs "~/.local/eclipse"
-            eclim-executable "~/.local/eclipse/eclim"
-            eclimd-default-workspace "~/Programming/Java")
       (set-mouse-color "white")
+      (vtec234/init-c)
+      (vtec234/init-java)
+
+      ;; TODO move
       (add-to-list 'auto-mode-alist '("\\.asciidoc?\\'" . adoc-mode))
-      (add-hook 'c-mode-common-hook 'vtec234/c-coding-hook)
       (require 'ob-ditaa)
       (org-babel-do-load-languages
        'org-babel-load-languages
        '((ditaa . t))))
+  #+END_SRC
+
+* Check
+  This variable is defined on successful loading of this file.
+  #+BEGIN_SRC emacs-lisp
+    (defvar vtec234/spacemacs-org-loaded t)
   #+END_SRC
