@@ -62,7 +62,8 @@
          version-control
          git
          org
-         asciidoc
+         ;;asciidoc
+         html
          ;; (shell :variables
          ;;        shell-default-height 30
          ;;        shell-default-position 'bottom)
@@ -552,6 +553,26 @@
       (add-hook 'java-mode-hook 'vtec234/java-hook))
   #+END_SRC
 
+* Org-mode programming
+  #+BEGIN_SRC emacs-lisp
+    (defun vtec234/org-mode-hook()
+      (require 'ob-ditaa)
+      (org-babel-do-load-languages
+       'org-babel-load-languages
+       '((ditaa . t)
+         (C . t)
+         (shell . t)))
+      (unless (boundp 'vtec234/org-mode-hook-ran)
+        (setq org-babel-exp-code-template
+              (concat "〈 \/%name\/ 〉 ≡\n" org-babel-exp-code-template))
+        (setq vtec234/org-mode-hook-ran t)))
+  #+END_SRC
+
+  #+BEGIN_SRC emacs-lisp
+    (defun vtec234/init-org-mode ()
+      (add-hook 'org-mode-hook 'vtec234/org-mode-hook))
+  #+END_SRC
+
 * User configuration
   Configuration function for user code.
   This function is called at the very end of Spacemacs initialization after
@@ -567,13 +588,10 @@
       (set-mouse-color "white")
       (vtec234/init-c)
       (vtec234/init-java)
+      (vtec234/init-org-mode)
 
-      ;; TODO move
-      (add-to-list 'auto-mode-alist '("\\.asciidoc?\\'" . adoc-mode))
-      (require 'ob-ditaa)
-      (org-babel-do-load-languages
-       'org-babel-load-languages
-       '((ditaa . t))))
+      ;; TODO move this
+      (add-to-list 'auto-mode-alist (cons "\\.asciidoc\\'" 'adoc-mode)))
   #+END_SRC
 
 * Check
