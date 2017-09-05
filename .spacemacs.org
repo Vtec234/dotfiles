@@ -69,8 +69,7 @@
        ;; packages, then consider creating a layer. You can also put the
        ;; configuration in `dotspacemacs/user-config'.
        dotspacemacs-additional-packages
-       '(
-         smart-tabs-mode
+       '(smart-tabs-mode
          qml-mode
          sourcetrail
          rtags
@@ -510,6 +509,11 @@
    
 ** RTags integration
    #+BEGIN_SRC emacs-lisp
+     ;; This fails to register, so add function to force at editing time
+     (defun vtec234/company-force-rtags ()
+       (interactive)
+       (push 'company-rtags company-backends-c-mode-common))
+
      (defun vtec234/init-rtags ()
        (evil-leader/set-key-for-mode 'c++-mode "oo" 'rtags-find-symbol-at-point)
        (evil-leader/set-key-for-mode 'c++-mode "os" 'rtags-find-symbol)
@@ -520,6 +524,7 @@
        (evil-leader/set-key-for-mode 'c++-mode "ot" 'rtags-symbol-type)
        (evil-leader/set-key-for-mode 'c++-mode "o," 'rtags-location-stack-back)
        (evil-leader/set-key-for-mode 'c++-mode "o." 'rtags-location-stack-forward)
+       (evil-leader/set-key-for-mode 'c++-mode "oi" 'vtec234/company-force-rtags)
 
        ;; company
        (require 'rtags)
@@ -579,16 +584,7 @@
 * Org-mode programming
   #+BEGIN_SRC emacs-lisp
     (defun vtec234/org-mode-hook()
-      (require 'ob-ditaa)
-      (org-babel-do-load-languages
-       'org-babel-load-languages
-       '((ditaa . t)
-         (C . t)
-         (shell . t)))
-      (unless (boundp 'vtec234/org-mode-hook-ran)
-        (setq org-babel-exp-code-template
-              (concat "〈 \/%name\/ 〉 ≡\n" org-babel-exp-code-template))
-        (setq vtec234/org-mode-hook-ran t)))
+        (setq vtec234/org-mode-hook-ran t))
   #+END_SRC
 
   #+BEGIN_SRC emacs-lisp
