@@ -55,8 +55,8 @@ modules-right = filesystem xbacklight volume xkeyboard memory cpu wlan eth batte
 tray-position = right
 tray-padding = 2
 
-scroll-up = i3wm-wsnext
-scroll-down = i3wm-wsprev
+scroll-up = i3-msg workspace next; i3-msg scratchpad show
+scroll-down = i3-msg workspace prev; i3-msg scratchpad show
 
 
 [module/xwindow]

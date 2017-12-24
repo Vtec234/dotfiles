@@ -59,10 +59,14 @@
                           auto-completion-return-key-behavior nil
                           auto-completion-tab-key-behavior 'cycle
                           auto-completion-enable-help-tooltip 'manual)
+         scala
+         extra-langs
+         lua
          emacs-lisp
          version-control
          git
-         org)
+         org
+         html)
 
        ;; List of additional packages that will be installed without being
        ;; wrapped in a layer. If you need some configuration for these
@@ -73,6 +77,7 @@
          qml-mode
          sourcetrail
          rtags
+         eclim
          helm-rtags
          company-qml
          company-rtags
@@ -608,6 +613,15 @@
       (vtec234/init-c)
       (vtec234/init-java)
       (vtec234/init-org-mode)
+
+      ;; Resizable NeoTree
+      (setq neo-window-fixed-size nil)
+      (defun neotree-keep-size (fn &rest args)
+        "Reset neotree width after open, if user adjusted it's size."
+        (let ((w (window-width)))
+          (funcall fn)
+          (neo-global--set-window-width w)))
+      (advice-add 'neotree-enter :around 'neotree-keep-size)
 
       ;; TODO move this
       (add-to-list 'auto-mode-alist (cons "\\.asciidoc\\'" 'adoc-mode))
