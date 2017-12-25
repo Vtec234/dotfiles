@@ -1,0 +1,10 @@
+[user]
+	email = wjnawrocki@protonmail.com
+	name = Wojciech Nawrocki
+	signingkey = C32B69B7
+
+[commit]
+	gpgSign = true
+
+[gpg]
+	program = gpg2
