@@ -2,6 +2,7 @@ set clipboard=unnamedplus
 set expandtab
 set shiftwidth=4
 set tabstop=4
+set mouse=a
 
 filetype plugin indent on
 
